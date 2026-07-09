@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GB28181 摄像头接入 · 原型导航</title>
+    <style>
+        :root { color-scheme: dark; }
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #0d1117;
+            color: #e6edf3;
+            line-height: 1.5;
+        }
+        .wrap { max-width: 960px; margin: 0 auto; padding: 32px 20px 48px; }
+        h1 { font-size: 1.5rem; margin: 0 0 8px; }
+        p { color: #8b949e; margin: 0 0 24px; }
+        h2 { font-size: 1rem; color: #58a6ff; margin: 28px 0 12px; border-bottom: 1px solid #21262d; padding-bottom: 8px; }
+        ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+        a {
+            display: block;
+            padding: 12px 14px;
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            color: #e6edf3;
+            text-decoration: none;
+            transition: border-color .15s, background .15s;
+        }
+        a:hover { border-color: #58a6ff; background: #1c2128; }
+        .sub { font-size: 12px; color: #8b949e; margin-top: 4px; }
+        footer { margin-top: 40px; font-size: 12px; color: #6e7681; }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h1>GB28181 摄像头接入 · HTML 原型</h1>
+        <p>Avant Hub 摄像头接入需求交互原型（GitHub Pages 发布包）。页面使用 Tailwind / Font Awesome CDN，需联网访问。</p>
+
+        <h2>平台级</h2>
+        <ul>
+            <li><a href="platform-home.html">全局首页<span class="sub">项目总览、添加设备、系统设置入口</span></a></li>
+            <li><a href="platform-device-management.html">平台设备管理（设备池）<span class="sub">建档发证、国标接入、分配项目</span></a></li>
+        </ul>
+
+        <h2>项目级 · 设备</h2>
+        <ul>
+            <li><a href="project-home.html">项目首页<span class="sub">App Launcher、设备/告警卡片</span></a></li>
+            <li><a href="camera-list.html">摄像头列表<span class="sub">项目内设备卡片、地图落点</span></a></li>
+            <li><a href="camera-detail.html">摄像头详情<span class="sub">通道列表、接入凭证、同步</span></a></li>
+        </ul>
+
+        <h2>监控中心</h2>
+        <ul>
+            <li><a href="camera-monitor.html">摄像头监控<span class="sub">分屏实况、云台、设备-通道树</span></a></li>
+            <li><a href="drone-monitor.html">无人机/机巢实况<span class="sub">监控中心 Tab 对照页</span></a></li>
+            <li><a href="camera-playback.html">录像回放<span class="sub">时间轴、关联告警、播放控制</span></a></li>
+        </ul>
+
+        <h2>告警</h2>
+        <ul>
+            <li><a href="camera-alarm-list.html">摄像头告警列表<span class="sub">本期新增 Tab</span></a></li>
+            <li><a href="drone-alarm-list.html">无人机告警列表<span class="sub">对照参考（事件联动 2.0）</span></a></li>
+        </ul>
+
+        <h2>辅助</h2>
+        <ul>
+            <li><a href="drone-list.html">无人机列表<span class="sub">项目设备对照</span></a></li>
+        </ul>
+
+        <footer>维护目录：<code>202606摄像头接入/prototypes</code> · 发布包 <code>github-pages</code></footer>
+    </div>
+</body>
+</html>
