@@ -51,13 +51,13 @@
 
     <!-- 设备类型 Tab -->
     <div class="px-6 border-b border-[#2d2d2d] flex space-x-8 text-sm shrink-0 mb-4">
-        <div id="tab-drone" class="py-2.5 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors" onclick="switchMainTab('drone')">无人机及机巢</div>
-        <div id="tab-camera" class="py-2.5 text-[#58a6ff] border-b-2 border-[#58a6ff] font-medium cursor-pointer" onclick="switchMainTab('camera')">摄像头(GB28181)</div>
+        <div id="tab-drone" class="py-2.5 text-[#58a6ff] border-b-2 border-[#58a6ff] font-medium cursor-pointer" onclick="switchMainTab('drone')">无人机及机巢</div>
+        <div id="tab-camera" class="py-2.5 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors" onclick="switchMainTab('camera')">摄像头</div>
         <div class="py-2.5 text-gray-600 cursor-not-allowed" title="规划中">地面机器人 <span class="ml-1 text-[10px] bg-[#333] text-gray-400 px-1 rounded">规划中</span></div>
     </div>
 
     <!-- 摄像头内容区 -->
-    <div id="tab-content-camera" class="flex-1 flex flex-col overflow-hidden">
+    <div id="tab-content-camera" class="flex-1 flex flex-col overflow-hidden hidden">
         <!-- 统计条 -->
         <div class="px-6 py-3 flex space-x-3 shrink-0">
         <div class="flex-1 bg-[#1e1e1e] border border-[#2d2d2d] rounded-lg px-4 py-3">
@@ -204,17 +204,13 @@
     </div> <!-- end tab-content-camera -->
 
     <!-- 无人机及机巢内容区 -->
-    <div id="tab-content-drone" class="flex-1 flex flex-col overflow-hidden hidden">
+    <div id="tab-content-drone" class="flex-1 flex flex-col overflow-hidden">
         <!-- 统计条 -->
         <div class="px-6 py-3 flex space-x-3 shrink-0">
             <div class="flex-1 bg-[#1e1e1e] border border-[#2d2d2d] rounded-lg px-4 py-3">
                 <div class="text-xs text-gray-500 mb-1">设备总数</div>
                 <div class="text-2xl font-bold text-white mb-1">45</div>
                 <div class="text-xs text-gray-500">30 在线 / 15 离线</div>
-            </div>
-            <div class="flex-1 bg-[#1e1e1e] border border-[#2d2d2d] rounded-lg px-4 py-3 flex flex-col justify-center">
-                <div class="text-xs text-gray-500">未注册</div>
-                <div class="text-xl font-semibold text-[#d29922] mt-0.5">0</div>
             </div>
             <div class="flex-1 bg-[#1e1e1e] border border-[#2d2d2d] rounded-lg px-4 py-3 flex flex-col justify-center">
                 <div class="text-xs text-gray-500">未分配项目</div>
@@ -225,15 +221,22 @@
         <!-- 工具栏 -->
         <div class="px-6 pb-3 flex justify-between items-center shrink-0">
             <div class="flex items-center space-x-2">
-                <div class="bg-[#1e1e1e] border border-[#333] rounded px-3 py-1.5 flex items-center space-x-2 cursor-pointer hover:border-[#555]">
+                <div class="bg-[#1e1e1e] border border-[#333] rounded px-3 py-1 flex items-center space-x-1 hover:border-[#555]">
                     <span class="text-xs text-gray-400">设备类型</span>
-                    <span class="text-xs text-white">全部</span>
-                    <i class="fas fa-chevron-down text-[10px] text-gray-500"></i>
+                    <select class="bg-transparent text-xs text-white focus:outline-none cursor-pointer">
+                        <option class="bg-[#1e1e1e]">全部</option>
+                        <option class="bg-[#1e1e1e]">无人机</option>
+                        <option class="bg-[#1e1e1e]">机巢</option>
+                        <option class="bg-[#1e1e1e]">基站</option>
+                    </select>
                 </div>
-                <div class="bg-[#1e1e1e] border border-[#333] rounded px-3 py-1.5 flex items-center space-x-2 cursor-pointer hover:border-[#555]">
-                    <span class="text-xs text-gray-400">接入状态</span>
-                    <span class="text-xs text-white">全部</span>
-                    <i class="fas fa-chevron-down text-[10px] text-gray-500"></i>
+                <div class="bg-[#1e1e1e] border border-[#333] rounded px-3 py-1 flex items-center space-x-1 hover:border-[#555]">
+                    <span class="text-xs text-gray-400">状态</span>
+                    <select class="bg-transparent text-xs text-white focus:outline-none cursor-pointer">
+                        <option class="bg-[#1e1e1e]">全部</option>
+                        <option class="bg-[#1e1e1e]">在线</option>
+                        <option class="bg-[#1e1e1e]">离线</option>
+                    </select>
                 </div>
                 <div class="bg-[#1e1e1e] border border-[#333] rounded px-3 py-1.5 flex items-center space-x-2 cursor-pointer hover:border-[#555]">
                     <span class="text-xs text-gray-400">所属项目</span>
@@ -241,13 +244,13 @@
                     <i class="fas fa-chevron-down text-[10px] text-gray-500"></i>
                 </div>
                 <div class="relative w-64">
-                    <input type="text" placeholder="搜索设备名称 / SN码" class="w-full bg-[#1e1e1e] border border-[#333] text-xs rounded pl-3 pr-8 py-1.5 focus:outline-none focus:border-[#58a6ff] text-white">
+                    <input type="text" placeholder="搜索设备名称 / 设备SN" class="w-full bg-[#1e1e1e] border border-[#333] text-xs rounded pl-3 pr-8 py-1.5 focus:outline-none focus:border-[#58a6ff] text-white">
                     <i class="fas fa-search absolute right-2.5 top-2 text-gray-500 text-xs"></i>
                 </div>
             </div>
             <div class="flex items-center space-x-2">
-                <button class="px-3 py-1.5 bg-[#1f6feb] text-white rounded hover:bg-[#388bfd] transition-colors text-xs flex items-center">
-                    <i class="fas fa-plus mr-1.5 text-[10px]"></i> 添加无人机/机巢
+                <button onclick="openDroneGuideModal()" class="px-3 py-1.5 bg-[#1f6feb] text-white rounded hover:bg-[#388bfd] transition-colors text-xs flex items-center">
+                    <i class="fas fa-book mr-1.5 text-[10px]"></i> 无人机添加指南
                 </button>
             </div>
         </div>
@@ -261,7 +264,8 @@
                         <th class="py-3 px-4 font-normal">序号</th>
                             <th class="py-3 px-4 font-normal">设备名称</th>
                             <th class="py-3 px-4 font-normal">设备类型</th>
-                            <th class="py-3 px-4 font-normal">SN码</th>
+                            <th class="py-3 px-4 font-normal">产品型号</th>
+                            <th class="py-3 px-4 font-normal">设备SN</th>
                             <th class="py-3 px-4 font-normal">状态</th>
                             <th class="py-3 px-4 font-normal">所属项目</th>
                             <th class="py-3 px-4 font-normal">创建时间</th>
@@ -276,6 +280,7 @@
                                 <span class="text-white">007机巢576号677</span>
                             </td>
                             <td class="py-3 px-4 text-gray-400 text-xs">机巢</td>
+                            <td class="py-3 px-4 text-gray-400 text-xs">EVO Nest</td>
                             <td class="py-3 px-4 font-mono text-gray-400 text-xs">1581F4BFC1234567</td>
                             <td class="py-3 px-4">
                                 <span class="text-[#3fb950] text-xs flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-[#3fb950] mr-1.5"></span>在线</span>
@@ -283,10 +288,9 @@
                             <td class="py-3 px-4 text-gray-400 text-xs">青海油田管道巡检项目</td>
                             <td class="py-3 px-4 text-gray-400 text-xs">2025-05-05 12:00:00</td>
                             <td class="py-3 px-4 text-right whitespace-nowrap">
-                                <a href="#" class="text-[#58a6ff] hover:underline text-xs mr-3">查看详情</a>
+                                <a href="drone-detail.html?from=platform" class="text-[#58a6ff] hover:underline text-xs mr-3">查看详情</a>
                                 <a href="#" class="text-[#58a6ff] hover:underline text-xs mr-3">修改项目</a>
-                                <a href="#" class="text-[#58a6ff] hover:underline text-xs mr-3">编辑</a>
-                                <a href="#" onclick="openDeleteModal('无人机及机巢')" class="text-[#58a6ff] hover:underline text-xs">删除</a>
+                                <a href="#" onclick="openDeleteModal('007机巢576号677', '1581F4BFC1234567', 'drone')" class="text-[#58a6ff] hover:underline text-xs">删除</a>
                             </td>
                         </tr>
                         <!-- 行 2 -->
@@ -296,6 +300,7 @@
                                 <span class="text-white">M350 RTK - 01</span>
                             </td>
                             <td class="py-3 px-4 text-gray-400 text-xs">无人机</td>
+                            <td class="py-3 px-4 text-gray-400 text-xs">Matrice 350 RTK</td>
                             <td class="py-3 px-4 font-mono text-gray-400 text-xs">1581F4BFC7654321</td>
                             <td class="py-3 px-4">
                                 <span class="text-gray-400 text-xs flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-gray-500 mr-1.5"></span>离线</span>
@@ -303,10 +308,9 @@
                             <td class="py-3 px-4 text-gray-400 text-xs">青海油田管道巡检项目</td>
                             <td class="py-3 px-4 text-gray-400 text-xs">2025-05-05 12:00:00</td>
                             <td class="py-3 px-4 text-right whitespace-nowrap">
-                                <a href="#" class="text-[#58a6ff] hover:underline text-xs mr-3">查看详情</a>
+                                <a href="drone-detail.html?from=platform" class="text-[#58a6ff] hover:underline text-xs mr-3">查看详情</a>
                                 <a href="#" class="text-[#58a6ff] hover:underline text-xs mr-3">修改项目</a>
-                                <a href="#" class="text-[#58a6ff] hover:underline text-xs mr-3">编辑</a>
-                                <a href="#" onclick="openDeleteModal('无人机及机巢')" class="text-[#58a6ff] hover:underline text-xs">删除</a>
+                                <a href="#" onclick="openDeleteModal('M350 RTK - 01', '1581F4BFC7654321', 'drone')" class="text-[#58a6ff] hover:underline text-xs">删除</a>
                             </td>
                         </tr>
                     </tbody>
@@ -418,24 +422,35 @@
 
     <!-- ============ 删除确认 Modal ============ -->
     <div id="modal-delete-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[75] hidden flex items-center justify-center">
-        <div class="bg-[#161b22] border border-[#30363d] rounded-lg shadow-2xl w-[400px] flex flex-col overflow-hidden">
+        <div class="bg-[#161b22] border border-[#30363d] rounded-lg shadow-2xl w-[440px] flex flex-col overflow-hidden">
             <div class="px-6 py-5">
                 <div class="flex items-start">
                     <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-full bg-[#f85149]/10 sm:mx-0 sm:h-10 sm:w-10">
                         <i class="fas fa-exclamation-triangle text-[#f85149] text-lg"></i>
                     </div>
-                    <div class="ml-4 mt-0 text-left">
+                    <div class="ml-4 mt-0 text-left flex-1 min-w-0">
                         <h3 class="text-base font-medium text-white mb-2" id="delete-modal-title">确认删除该摄像头吗？</h3>
                         <div class="text-sm text-gray-400 space-y-2">
-                            <p>删除后，设备 <span id="delete-device-name" class="text-white font-medium">—</span> 及其全部通道、实况与回放入口将从平台移除，且操作不可恢复。</p>
-                            <p class="text-xs text-gray-500">已保存的历史录像不会立即删除，将在原保留周期（7 天）到期后自动清理，期间不再提供回放入口。</p>
+                            <p id="delete-desc">删除后，设备 <span id="delete-device-name" class="text-white font-medium">—</span> 及其全部通道、实况与回放入口将从平台移除，且操作不可恢复。</p>
+                        </div>
+                        <div id="delete-confirm-fields" class="mt-4 space-y-3 hidden">
+                            <div>
+                                <label id="delete-label-name" class="block text-xs text-gray-400 mb-1.5">请输入摄像头名称以确认删除</label>
+                                <input type="text" id="delete-input-name" autocomplete="off" placeholder="请输入摄像头名称" oninput="validateDeleteInputs()" class="w-full bg-[#0d1117] border border-[#30363d] text-sm text-white rounded px-3 py-2 focus:outline-none focus:border-[#58a6ff] placeholder:text-gray-600">
+                                <p id="delete-error-name" class="hidden text-[11px] text-[#f85149] mt-1">名称不匹配</p>
+                            </div>
+                            <div>
+                                <label id="delete-label-gb" class="block text-xs text-gray-400 mb-1.5">请输入摄像头国标编码以确认删除</label>
+                                <input type="text" id="delete-input-gb" autocomplete="off" placeholder="请输入摄像头国标编码" oninput="validateDeleteInputs()" class="w-full bg-[#0d1117] border border-[#30363d] text-sm text-white font-mono rounded px-3 py-2 focus:outline-none focus:border-[#58a6ff] placeholder:text-gray-600">
+                                <p id="delete-error-gb" class="hidden text-[11px] text-[#f85149] mt-1">不匹配</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="px-6 py-4 bg-[#0d1117] border-t border-[#30363d] flex justify-end space-x-3">
                 <button onclick="closeDeleteModal()" class="px-4 py-2 bg-[#21262d] text-gray-300 border border-[#30363d] rounded hover:bg-[#30363d] hover:text-white transition-colors text-sm">取消</button>
-                <button onclick="confirmDeleteAction()" class="px-4 py-2 bg-[#f85149] text-white rounded hover:bg-[#ff6a69] transition-colors text-sm font-medium">确认删除</button>
+                <button id="delete-confirm-btn" onclick="confirmDeleteAction()" disabled class="px-4 py-2 bg-[#f85149]/40 text-white/60 rounded cursor-not-allowed text-sm font-medium transition-colors">确认删除</button>
             </div>
         </div>
     </div>
@@ -650,6 +665,47 @@
             <div class="p-4 border-t border-[#30363d] flex justify-end space-x-2 shrink-0">
                 <button id="guide-prev-btn" onclick="prevGuideStep()" class="bg-[#21262d] hover:bg-[#30363d] text-white px-4 py-1.5 rounded transition-colors border border-[#30363d] text-sm hidden">上一步</button>
                 <button id="guide-next-btn" onclick="nextGuideStep()" class="bg-[#1f6feb] hover:bg-[#388bfd] text-white px-4 py-1.5 rounded transition-colors text-sm">下一步</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ 无人机添加指南 Modal（同已上线弹窗） ============ -->
+    <div id="modal-drone-guide-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center">
+        <div class="bg-[#1a1a1a] border border-[#30363d] rounded-lg shadow-2xl w-[860px] max-h-[85vh] flex flex-col">
+            <div class="px-6 py-4 flex justify-between items-center shrink-0">
+                <div class="flex items-center">
+                    <div class="text-[#58a6ff] font-bold italic tracking-wide mr-3">Avant</div>
+                    <h3 class="text-lg font-medium text-[#f85149]">无人机添加指南</h3>
+                </div>
+                <button onclick="closeDroneGuideModal()" class="text-gray-400 hover:text-white"><i class="fas fa-times text-lg"></i></button>
+            </div>
+            <div class="px-6 shrink-0">
+                <div class="inline-flex bg-[#0d0d0d] border border-[#2d2d2d] rounded-lg p-1 space-x-1">
+                    <button id="dg-tab-autel" onclick="switchDroneBrand('autel')" class="px-5 py-2 rounded-md text-sm bg-[#333] text-white transition-colors">Autel道通智能</button>
+                    <button id="dg-tab-dji" onclick="switchDroneBrand('dji')" class="px-5 py-2 rounded-md text-sm text-gray-400 hover:text-white transition-colors">大疆无人机</button>
+                </div>
+            </div>
+            <div class="flex-1 overflow-y-auto p-6 custom-scrollbar">
+                <div id="dg-panel-autel" class="grid grid-cols-2 gap-6">
+                    <div class="bg-[#242424] border border-[#2d2d2d] rounded-lg overflow-hidden cursor-pointer hover:border-[#58a6ff] transition-colors">
+                        <div class="h-64 flex items-center justify-center"><i class="fas fa-helicopter text-7xl text-gray-500"></i></div>
+                        <div class="pb-5 text-center text-white text-lg">EVO Max</div>
+                    </div>
+                    <div class="bg-[#242424] border border-[#2d2d2d] rounded-lg overflow-hidden cursor-pointer hover:border-[#58a6ff] transition-colors">
+                        <div class="h-64 flex items-center justify-center"><i class="fas fa-plane text-7xl text-gray-500"></i></div>
+                        <div class="pb-5 text-center text-white text-lg">Autel Dragonfish</div>
+                    </div>
+                </div>
+                <div id="dg-panel-dji" class="grid grid-cols-2 gap-6 hidden">
+                    <div class="bg-[#242424] border border-[#2d2d2d] rounded-lg overflow-hidden cursor-pointer hover:border-[#58a6ff] transition-colors">
+                        <div class="h-64 flex items-center justify-center"><i class="fas fa-helicopter text-7xl text-gray-500"></i></div>
+                        <div class="pb-5 text-center text-white text-lg">经纬 M350 RTK</div>
+                    </div>
+                    <div class="bg-[#242424] border border-[#2d2d2d] rounded-lg overflow-hidden cursor-pointer hover:border-[#58a6ff] transition-colors">
+                        <div class="h-64 flex items-center justify-center"><i class="fas fa-warehouse text-7xl text-gray-500"></i></div>
+                        <div class="pb-5 text-center text-white text-lg">DJI Dock 2 机场</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1232,18 +1288,99 @@
             }
         }
 
-        // 删除确认
-        function openDeleteModal(deviceName) {
-            const nameEl = document.getElementById('delete-device-name');
-            if (nameEl && deviceName) nameEl.textContent = deviceName;
+        // 删除确认：摄像头输入「名称 + 国标编码」；无人机/机巢输入「名称 + 设备SN」
+        let pendingDelete = { name: '', code: '', requireInput: false, kind: 'camera' };
+
+        function openDeleteModal(deviceName, code, kind) {
+            kind = kind || 'camera';
+            pendingDelete = {
+                name: deviceName || '',
+                code: code || '',
+                requireInput: !!code,
+                kind: kind
+            };
+            const isCamera = kind === 'camera';
+            const codeLabel = isCamera ? '国标编码' : '设备SN';
+
+            const titleEl = document.getElementById('delete-modal-title');
+            const descEl = document.getElementById('delete-desc');
+            const fieldsEl = document.getElementById('delete-confirm-fields');
+            const labelName = document.getElementById('delete-label-name');
+            const labelGb = document.getElementById('delete-label-gb');
+            const inputName = document.getElementById('delete-input-name');
+            const inputGb = document.getElementById('delete-input-gb');
+            const errName = document.getElementById('delete-error-name');
+            const errGb = document.getElementById('delete-error-gb');
+
+            if (titleEl) titleEl.textContent = isCamera ? '确认删除该摄像头吗？' : '确认删除该设备吗？';
+            if (descEl) descEl.innerHTML = isCamera
+                ? '删除后，设备 <span id="delete-device-name" class="text-white font-medium">' + (pendingDelete.name || '—') + '</span> 及其全部通道、实况与回放入口将从平台移除，且操作不可恢复。'
+                : '删除后，设备 <span id="delete-device-name" class="text-white font-medium">' + (pendingDelete.name || '—') + '</span> 将从平台设备池移除，且操作不可恢复。';
+            if (labelName) labelName.textContent = '请输入设备名称以确认删除';
+            if (labelGb) labelGb.textContent = '请输入' + codeLabel + '以确认删除';
+            if (inputName) inputName.placeholder = '请输入设备名称';
+            if (inputGb) inputGb.placeholder = '请输入' + codeLabel;
+            if (errName) errName.textContent = '设备名称不匹配';
+            if (errGb) errGb.textContent = codeLabel + '不匹配';
+
+            if (fieldsEl) fieldsEl.classList.toggle('hidden', !pendingDelete.requireInput);
+            if (inputName) inputName.value = '';
+            if (inputGb) inputGb.value = '';
+            if (errName) errName.classList.add('hidden');
+            if (errGb) errGb.classList.add('hidden');
+            setDeleteConfirmEnabled(!pendingDelete.requireInput);
             document.getElementById('modal-delete-overlay').classList.remove('hidden');
+            if (pendingDelete.requireInput) setTimeout(() => inputName && inputName.focus(), 50);
+        }
+
+        function setDeleteConfirmEnabled(enabled) {
+            const confirmBtn = document.getElementById('delete-confirm-btn');
+            if (!confirmBtn) return;
+            confirmBtn.disabled = !enabled;
+            confirmBtn.className = enabled
+                ? 'px-4 py-2 bg-[#f85149] text-white rounded hover:bg-[#ff6a69] transition-colors text-sm font-medium'
+                : 'px-4 py-2 bg-[#f85149]/40 text-white/60 rounded cursor-not-allowed text-sm font-medium transition-colors';
+        }
+
+        function validateDeleteInputs() {
+            if (!pendingDelete.requireInput) { setDeleteConfirmEnabled(true); return; }
+            const inputName = document.getElementById('delete-input-name');
+            const inputGb = document.getElementById('delete-input-gb');
+            const errName = document.getElementById('delete-error-name');
+            const errGb = document.getElementById('delete-error-gb');
+            const nameVal = (inputName?.value || '').trim();
+            const gbVal = (inputGb?.value || '').trim();
+            const nameOk = nameVal === pendingDelete.name;
+            const gbOk = gbVal === pendingDelete.code;
+            const nameTouched = nameVal.length > 0;
+            const gbTouched = gbVal.length > 0;
+            if (errName) errName.classList.toggle('hidden', !nameTouched || nameOk);
+            if (errGb) errGb.classList.toggle('hidden', !gbTouched || gbOk);
+            if (inputName) { inputName.classList.toggle('border-[#f85149]', nameTouched && !nameOk); inputName.classList.toggle('border-[#30363d]', !(nameTouched && !nameOk)); }
+            if (inputGb) { inputGb.classList.toggle('border-[#f85149]', gbTouched && !gbOk); inputGb.classList.toggle('border-[#30363d]', !(gbTouched && !gbOk)); }
+            setDeleteConfirmEnabled(nameOk && gbOk);
         }
 
         function closeDeleteModal() {
             document.getElementById('modal-delete-overlay').classList.add('hidden');
+            pendingDelete = { name: '', code: '', requireInput: false, kind: 'camera' };
+            const inputName = document.getElementById('delete-input-name');
+            const inputGb = document.getElementById('delete-input-gb');
+            if (inputName) inputName.value = '';
+            if (inputGb) inputGb.value = '';
+            setDeleteConfirmEnabled(false);
         }
 
         function confirmDeleteAction() {
+            if (pendingDelete.requireInput) {
+                const nameVal = (document.getElementById('delete-input-name')?.value || '').trim();
+                const gbVal = (document.getElementById('delete-input-gb')?.value || '').trim();
+                if (nameVal !== pendingDelete.name || gbVal !== pendingDelete.code) {
+                    validateDeleteInputs();
+                    showToast('请正确输入设备名称与' + (pendingDelete.kind === 'camera' ? '国标编码' : '设备SN'), 'warning');
+                    return;
+                }
+            }
             closeDeleteModal();
             showToast('设备已删除', 'success');
         }
@@ -1358,6 +1495,24 @@
                 cameraContent.classList.remove('hidden');
                 droneContent.classList.add('hidden');
             }
+        }
+
+        // 无人机添加指南（同已上线弹窗）
+        function openDroneGuideModal() {
+            document.getElementById('modal-drone-guide-overlay').classList.remove('hidden');
+            switchDroneBrand('autel');
+        }
+
+        function closeDroneGuideModal() {
+            document.getElementById('modal-drone-guide-overlay').classList.add('hidden');
+        }
+
+        function switchDroneBrand(brand) {
+            const isAutel = brand === 'autel';
+            document.getElementById('dg-panel-autel').classList.toggle('hidden', !isAutel);
+            document.getElementById('dg-panel-dji').classList.toggle('hidden', isAutel);
+            document.getElementById('dg-tab-autel').className = 'px-5 py-2 rounded-md text-sm transition-colors ' + (isAutel ? 'bg-[#333] text-white' : 'text-gray-400 hover:text-white');
+            document.getElementById('dg-tab-dji').className = 'px-5 py-2 rounded-md text-sm transition-colors ' + (!isAutel ? 'bg-[#333] text-white' : 'text-gray-400 hover:text-white');
         }
 
         // 摄像头接入指南

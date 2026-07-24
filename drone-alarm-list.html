@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>告警列表原型</title>
+  <title>告警中心 - 无人机告警 - Avant Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -89,32 +89,46 @@
   <!-- Header -->
   <header class="h-[52px] shrink-0 border-b border-borderDark flex items-center justify-between px-6">
     <div class="flex items-center gap-2 text-sm">
-      <button class="hover:text-white transition-colors" onclick="window.history.back()">
+      <button class="hover:text-white transition-colors" onclick="location.href='project-home.html'">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
       </button>
-      <span class="text-textSub">项目首页</span>
+      <span class="text-textSub hover:text-white cursor-pointer" onclick="location.href='project-home.html'">项目首页</span>
       <span class="text-textSub">/</span>
-      <span class="text-textMain">告警管理</span>
-      <svg class="w-4 h-4 text-textSub" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      <div class="relative" id="breadcrumbDropdown"><div class="flex items-center cursor-pointer hover:text-white text-textMain" onclick="event.stopPropagation(); var m=document.getElementById('breadcrumbMenu'); if(m) m.classList.toggle('hidden');">
+              <span>告警中心</span>
+              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </div><div id="breadcrumbMenu" class="absolute left-0 top-full pt-1 w-36 hidden z-50">
+                    <div class="bg-bgPanel border border-borderDark rounded shadow-lg py-1">
+                  <div class="px-4 py-2 hover:bg-[rgba(255,255,255,0.08)] cursor-pointer text-textSub" onclick="window.location.href='drone-list.html'">设备管理</div>
+                  <div class="px-4 py-2 hover:bg-[rgba(255,255,255,0.08)] cursor-pointer text-textSub" onclick="window.location.href='task-live.html'">任务实况</div>
+                  <div class="px-4 py-2 hover:bg-[rgba(255,255,255,0.08)] cursor-pointer text-textSub" onclick="window.location.href='camera-monitor.html'">监控中心</div>
+                  <div class="px-4 py-2 hover:bg-[rgba(255,255,255,0.08)] cursor-pointer text-textSub" onclick="window.location.href='task-list.html'">任务管理</div>
+                  <div class="px-4 py-2 bg-[rgba(24,144,255,0.1)] text-accent cursor-pointer" onclick="window.location.href='alert-list.html'">告警中心</div>
+                  <div class="px-4 py-2 hover:bg-[rgba(255,255,255,0.08)] cursor-pointer text-textSub" onclick="window.location.href='resource-list.html'">资源库</div>
+                  <div class="px-4 py-2 hover:bg-[rgba(255,255,255,0.08)] cursor-pointer text-textSub" onclick="window.location.href='workflow-list.html'">自动化工作流</div>
+              </div>
+          </div>
+      </div>
     </div>
     <div class="flex items-center gap-4">
-      <button class="w-6 h-6 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity overflow-hidden" title="巡检助手">
-        <img src="assistant-icon.png" alt="巡检助手" class="w-full h-full object-cover">
-      </button>
-      <a href="javascript:void(0)" class="text-textSub hover:text-white transition-colors" title="关闭">
+      <a href="../project-home.html" class="text-textSub hover:text-white transition-colors" title="关闭">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
       </a>
     </div>
   </header>
 
-  <!-- Tabs -->
-  <div class="px-6 pt-4 flex gap-6">
-    <div class="pb-3 border-b-2 border-accent text-accent font-medium cursor-pointer">告警列表</div>
-    <div class="pb-3 text-textSub hover:text-textMain cursor-pointer">震动光纤告警</div>
+  <!-- 告警中心二级 Tab -->
+  <div class="px-6 pt-4 flex gap-6 border-b border-borderDark shrink-0" id="alertCenterTabs">
+    <div class="pb-3 border-b-2 border-accent text-accent font-medium cursor-pointer -mb-px" data-tab="drone" onclick="switchAlertTab('drone')">无人机告警</div>
+    <div class="pb-3 text-textSub hover:text-textMain cursor-pointer -mb-px" data-tab="camera" onclick="location.href='camera-alarm-list.html'">摄像头告警</div>
+    <div class="pb-3 text-textSub hover:text-textMain cursor-pointer -mb-px" data-tab="fiber" onclick="switchAlertTab('fiber')">震动光纤告警</div>
+    <div class="pb-3 text-textSub hover:text-textMain cursor-pointer -mb-px" data-tab="blackflight" onclick="switchAlertTab('blackflight')">黑飞告警</div>
   </div>
 
+  <!-- 无人机告警内容区（原告警列表） -->
+  <div id="panel-drone" class="flex-1 flex flex-col min-h-0">
   <!-- Filters & Toolbar -->
-  <div class="px-6 py-4 flex items-center justify-between shrink-0 border-y border-borderDark">
+  <div class="px-6 py-4 flex items-center justify-between shrink-0 border-b border-borderDark">
     <div class="flex items-center gap-3">
       <!-- Search -->
       <div class="relative w-64">
@@ -124,38 +138,41 @@
       
       <!-- Status -->
       <div class="relative w-36">
-        <select class="w-full rounded bg-[#1A1A1A] border-borderDark px-3 py-2 cursor-pointer hover:border-accent/50 focus:border-accent transition-colors">
-          <option>全部告警状态</option>
-          <option>待确认</option>
-          <option>已确认</option>
-          <option>已处理</option>
-          <option>无效告警</option>
+        <select class="w-full rounded bg-[#1A1A1A] border-borderDark px-3 py-2 cursor-pointer hover:border-accent/50 focus:border-accent transition-colors text-textSub" onchange="this.classList.toggle('text-textSub', this.value==='');">
+          <option value="" selected disabled hidden>全部告警状态</option>
+          <option value="" class="text-textSub">全部告警状态</option>
+          <option value="待确认" class="text-textMain">待确认</option>
+          <option value="已确认" class="text-textMain">已确认</option>
+          <option value="已处理" class="text-textMain">已处理</option>
+          <option value="无效告警" class="text-textMain">无效告警</option>
         </select>
       </div>
 
       <!-- Level -->
       <div class="relative w-32">
-        <select class="w-full rounded bg-[#1A1A1A] border-borderDark px-3 py-2 cursor-pointer hover:border-accent/50 focus:border-accent transition-colors">
-          <option>全部等级</option>
-          <option>一级</option>
-          <option>二级</option>
-          <option>三级</option>
-          <option>四级</option>
-          <option>五级</option>
+        <select class="w-full rounded bg-[#1A1A1A] border-borderDark px-3 py-2 cursor-pointer hover:border-accent/50 focus:border-accent transition-colors text-textSub" onchange="this.classList.toggle('text-textSub', this.value==='');">
+          <option value="" selected disabled hidden>全部等级</option>
+          <option value="" class="text-textSub">全部等级</option>
+          <option value="一级" class="text-textMain">一级</option>
+          <option value="二级" class="text-textMain">二级</option>
+          <option value="三级" class="text-textMain">三级</option>
+          <option value="四级" class="text-textMain">四级</option>
+          <option value="五级" class="text-textMain">五级</option>
         </select>
       </div>
 
       <!-- Event Status -->
       <div class="relative w-36">
-        <select class="w-full rounded bg-[#1A1A1A] border-borderDark px-3 py-2 cursor-pointer hover:border-accent/50 focus:border-accent transition-colors">
-          <option>全部处置状态</option>
-          <option>待处置</option>
-          <option>调度中</option>
-          <option>处置中</option>
-          <option>处置完成</option>
-          <option>处置失败</option>
-          <option>已取消</option>
-          <option>已过期</option>
+        <select class="w-full rounded bg-[#1A1A1A] border-borderDark px-3 py-2 cursor-pointer hover:border-accent/50 focus:border-accent transition-colors text-textSub" onchange="this.classList.toggle('text-textSub', this.value==='');">
+          <option value="" selected disabled hidden>全部处置状态</option>
+          <option value="" class="text-textSub">全部处置状态</option>
+          <option value="待处置" class="text-textMain">待处置</option>
+          <option value="调度中" class="text-textMain">调度中</option>
+          <option value="处置中" class="text-textMain">处置中</option>
+          <option value="处置完成" class="text-textMain">处置完成</option>
+          <option value="处置失败" class="text-textMain">处置失败</option>
+          <option value="已取消" class="text-textMain">已取消</option>
+          <option value="已过期" class="text-textMain">已过期</option>
         </select>
       </div>
 
@@ -294,13 +311,19 @@
     </div>
 
     <!-- View Toggles -->
-    <div class="flex gap-1">
+    <div class="flex items-center gap-3">
+      <button onclick="location.href='detection-zone-config.html'" class="flex items-center gap-1.5 text-textMain px-3 py-2 border border-borderDark rounded hover:border-accent hover:text-accent transition-colors" title="配置无人机告警的检测区域">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+        检测区域配置
+      </button>
+      <div class="flex gap-1">
       <button id="btnList" onclick="setView('list')" class="btn-toggle active p-2 rounded hover:text-white hover:bg-borderDark transition-colors" title="列表视图">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
       </button>
       <button id="btnGrid" onclick="setView('grid')" class="btn-toggle p-2 rounded hover:text-white hover:bg-borderDark transition-colors" title="卡片视图">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
       </button>
+      </div>
     </div>
   </div>
 
@@ -324,6 +347,7 @@
             <th class="py-3 px-2 font-normal">上报时间</th>
             <th class="py-3 px-2 font-normal">处置状态</th>
             <th class="py-3 px-2 font-normal">操作</th>
+            <th class="py-3 px-2 font-normal">重新处置</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-borderDark" id="tableBody">
@@ -361,6 +385,23 @@
       </select>
     </div>
   </div>
+  </div><!-- /panel-drone -->
+
+  <!-- 震动光纤 / 黑飞 占位 -->
+  <div id="panel-fiber" class="hidden flex-1 flex items-center justify-center text-textSub">
+    <div class="text-center py-20">
+      <div class="text-4xl mb-3 opacity-40">〰️</div>
+      <div class="text-textMain mb-1">震动光纤告警</div>
+      <div class="text-sm">暂无告警数据（原型占位）</div>
+    </div>
+  </div>
+  <div id="panel-blackflight" class="hidden flex-1 flex items-center justify-center text-textSub">
+    <div class="text-center py-20">
+      <div class="text-4xl mb-3 opacity-40">✈</div>
+      <div class="text-textMain mb-1">黑飞告警</div>
+      <div class="text-sm">暂无告警数据（原型占位）</div>
+    </div>
+  </div>
 
   <script>
     // Data definition for consistency between views
@@ -391,7 +432,11 @@
         task: '景区门口大道巡检任务202605291...',
         channel: 'AI标注',
         status: '待确认',
-        eventStatus: '处置失败', // From our new requirement
+        eventStatus: '处置失败', // 列表逻辑用：取双处置中最新一次状态
+        disposals: [
+          { type: 'drone', status: '处置失败' },
+          { type: 'robot', status: '已取消' }
+        ],
         reporter: '交通Agent',
         time: '2026-05-29 16:58:29'
       },
@@ -407,6 +452,9 @@
         channel: 'AI标注',
         status: '待确认',
         eventStatus: '已过期',
+        disposals: [
+          { type: 'drone', status: '已过期' }
+        ],
         retryWorkflowAvailable: false,
         reporter: '交通Agent',
         time: '2026-05-29 16:58:27'
@@ -438,6 +486,10 @@
         channel: 'AI标注',
         status: '已确认',
         eventStatus: '处置完成',
+        disposals: [
+          { type: 'drone', status: '处置完成' },
+          { type: 'robot', status: '处置完成' }
+        ],
         reporter: '交通Agent',
         time: '2026-05-29 16:58:25'
       },
@@ -493,26 +545,83 @@
       return '<span class="text-textSub">-</span>';
     }
 
+    // 处置状态标签配色（事件状态 7 态）
+    function disposalStatusClass(status) {
+      if (status === '处置失败' || status === '已过期' || status === '已取消') return 'border-level1/40 bg-tagBg1 text-level1';
+      if (status === '调度中' || status === '处置中' || status === '待处置') return 'border-accent/40 bg-[rgba(24,144,255,0.12)] text-accent';
+      if (status === '处置完成') return 'border-green-500/40 bg-[rgba(34,197,94,0.12)] text-green-500';
+      return 'border-borderDark bg-borderDark/40 text-textSub';
+    }
+
+    function deviceTypeIcon(type) {
+      if (type === 'robot') {
+        return `<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M5 8h14a1 1 0 011 1v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9a1 1 0 011-1zm4 4v2m6-2v2"></path></svg>`;
+      }
+      return `<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v4m0 8v4m8-8h-4M8 12H4m2.5-5.5l3 3m8-3l-3 3m0 5l3 3m-11-3l-3 3"></path></svg>`;
+    }
+
+    /**
+     * 处置状态列：一个告警可同时有无人机处置 + 地面机器人处置，
+     * 按设备分别展示状态标签；仅触发一方时只显示一方；均未触发显示「-」。
+     */
+    function getDisposalChips(item) {
+      let list = item.disposals;
+      // 兼容旧数据：无 disposals 时用 eventStatus 生成单条（默认无人机）
+      if (!list || !list.length) {
+        if (!item.eventStatus || item.eventStatus === '-') return '<span class="text-textSub">-</span>';
+        list = [{ type: 'drone', status: item.eventStatus }];
+      }
+      const label = { drone: '无人机', robot: '地面机器人' };
+      return `<div class="flex flex-col gap-1">` + list.map(d =>
+        `<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded border text-[11px] w-fit ${disposalStatusClass(d.status)}">${deviceTypeIcon(d.type)}<span>${label[d.type] || '无人机'}·${d.status}</span></span>`
+      ).join('') + `</div>`;
+    }
+
+    const RETRYABLE_STATUSES = ['处置失败', '已取消', '已过期'];
+
+    function getDisposalStatus(item, type) {
+      const list = item.disposals;
+      if (list && list.length) {
+        const hit = list.find(d => d.type === type);
+        return hit ? hit.status : null;
+      }
+      // 兼容旧数据：无 disposals 时 eventStatus 视为无人机处置状态
+      if (type === 'drone' && item.eventStatus && item.eventStatus !== '-') return item.eventStatus;
+      return null;
+    }
+
+    function canRetryDevice(item, type) {
+      return RETRYABLE_STATUSES.includes(getDisposalStatus(item, type));
+    }
+
     function getActionsHTML(item) {
-      let actions = [];
+      let primary = [];
       
       // 查看详情 按钮在最左边
-      actions.push(`<a href="alert-details.html?id=${item.id}" class="text-accent hover:text-blue-400">查看详情</a>`);
+      primary.push(`<a href="alert-details.html?id=${item.id}" class="text-accent hover:text-blue-400">查看详情</a>`);
 
       if (item.status === '待确认') {
-        actions.push(`<button onclick="handleAction('confirm', '${item.id}')" class="text-accent hover:text-blue-400">确认告警</button>`);
-        actions.push(`<button onclick="handleAction('invalid', '${item.id}')" class="text-accent hover:text-blue-400">标记无效</button>`);
+        primary.push(`<button onclick="handleAction('confirm', '${item.id}')" class="text-accent hover:text-blue-400">确认告警</button>`);
+        primary.push(`<button onclick="handleAction('invalid', '${item.id}')" class="text-accent hover:text-blue-400">标记无效</button>`);
       } else if (item.status === '已确认') {
-        actions.push(`<button onclick="handleAction('cancelConfirm', '${item.id}')" class="text-accent hover:text-blue-400">取消确认</button>`);
-        actions.push(`<button onclick="handleAction('push', '${item.id}')" class="text-accent hover:text-blue-400">消息推送</button>`);
+        primary.push(`<button onclick="handleAction('cancelConfirm', '${item.id}')" class="text-accent hover:text-blue-400">取消确认</button>`);
+        primary.push(`<button onclick="handleAction('push', '${item.id}')" class="text-accent hover:text-blue-400">消息推送</button>`);
       }
       
-      // 新增要求：处置失败/已取消/已过期，且告警是待确认，可以重新处置
-      if (item.status === '待确认' && (item.eventStatus === '处置失败' || item.eventStatus === '已取消' || item.eventStatus === '已过期')) {
-        actions.push(`<button onclick="handleRetry('${item.id}')" class="text-accent hover:text-blue-400 font-medium">重新处置</button>`);
+      return `<div class="flex items-center gap-3 flex-wrap">${primary.join('')}</div>`;
+    }
+
+    /** 「重新处置」独立列：上下排布，仅对应处置失败/已取消/已过期时出现 */
+    function getRetryActionsHTML(item) {
+      let retries = [];
+      if (canRetryDevice(item, 'drone')) {
+        retries.push(`<button onclick="handleRetry('${item.id}', 'drone')" class="text-accent hover:text-blue-400 font-medium whitespace-nowrap">重新处置（无人机）</button>`);
       }
-      
-      return `<div class="flex items-center gap-3">${actions.join('')}</div>`;
+      if (canRetryDevice(item, 'robot')) {
+        retries.push(`<button onclick="handleRetry('${item.id}', 'robot')" class="text-accent hover:text-blue-400 font-medium whitespace-nowrap">重新处置（地面机器人）</button>`);
+      }
+      if (!retries.length) return '<span class="text-textSub">-</span>';
+      return `<div class="flex flex-col gap-1 items-start">${retries.join('')}</div>`;
     }
 
     function renderList() {
@@ -534,8 +643,9 @@
           <td class="py-4 px-2"><span class="flex items-center gap-1.5 text-[13px] text-textMain"><span class="w-1.5 h-1.5 rounded-full ${getStatusDot(item.status)}"></span>${item.status}</span></td>
           <td class="py-4 px-2 text-[#8C8C8C] text-[13px]">${item.reporter}</td>
           <td class="py-4 px-2 text-[#8C8C8C] text-[13px]">${item.time}</td>
-          <td class="py-4 px-2 text-[13px]">${getEventStatusHTML(item.eventStatus)}</td>
+          <td class="py-4 px-2 text-[13px]">${getDisposalChips(item)}</td>
           <td class="py-4 px-2 text-[13px] font-medium">${getActionsHTML(item)}</td>
+          <td class="py-4 px-2 text-[13px] font-medium">${getRetryActionsHTML(item)}</td>
         </tr>
       `).join('');
     }
@@ -580,16 +690,17 @@
               </div>
               
               <!-- Event Status Highlight -->
-              <div class="flex items-center gap-1.5 pt-1.5 mt-1.5 border-t border-borderDark/50">
-                <span class="text-textSub">处置状态：</span>
-                ${getEventStatusHTML(item.eventStatus)}
+              <div class="flex items-start gap-1.5 pt-1.5 mt-1.5 border-t border-borderDark/50">
+                <span class="text-textSub shrink-0 mt-0.5">处置状态：</span>
+                ${getDisposalChips(item)}
               </div>
             </div>
           </div>
           
           <!-- Actions Footer -->
-          <div class="px-3 py-2 bg-[#1A1A1A] border-t border-borderDark flex flex-wrap gap-x-3 gap-y-1.5 text-xs mt-auto">
+          <div class="px-3 py-2 bg-[#1A1A1A] border-t border-borderDark flex flex-col gap-1.5 text-xs mt-auto">
             ${getActionsHTML(item)}
+            <div class="pt-1 border-t border-borderDark/50">${getRetryActionsHTML(item)}</div>
           </div>
         </div>
       `).join('');
@@ -657,26 +768,32 @@
       closeInvalidModal();
     }
 
-    /** 模拟：按事件类型匹配已启用且勾选告警触发的工作流 */
-    function findRetryWorkflow(item) {
+    /** 模拟：按事件类型 + 执行设备类型匹配已启用且勾选告警触发的工作流 */
+    function findRetryWorkflow(item, deviceType) {
       if (item.retryWorkflowAvailable === false) return null;
-      return { enabled: true, alertTrigger: true };
+      return { enabled: true, alertTrigger: true, deviceType };
     }
 
-    function handleRetry(id) {
+    function handleRetry(id, deviceType) {
       const item = alerts.find(a => a.id === id);
       if (!item) return;
+      const typeLabel = deviceType === 'robot' ? '地面机器人' : '无人机';
 
-      if (!findRetryWorkflow(item)) {
-        showToast('未找到可用的自动化工作流配置，请检查配置后重试！');
+      if (!findRetryWorkflow(item, deviceType)) {
+        showToast(`未找到可用的${typeLabel}处置工作流配置，请检查配置后重试！`);
         return;
       }
 
-      if (!confirm('将按工作流配置重新触发事件处置，是否确认？')) return;
+      if (!confirm(`将按${typeLabel}工作流配置重新触发事件处置，是否确认？`)) return;
 
+      if (!item.disposals) item.disposals = [];
+      const hit = item.disposals.find(d => d.type === deviceType);
+      if (hit) hit.status = '调度中';
+      else item.disposals.push({ type: deviceType, status: '调度中' });
+      // 列表「最新事件状态」取该次重新处置
       item.eventStatus = '调度中';
-      item.status = '已确认';
-      showToast('重新处置触发成功，等待调度');
+      if (item.status === '待确认') item.status = '已确认';
+      showToast(`重新处置（${typeLabel}）触发成功，等待调度`);
       renderList();
       renderGrid();
     }
@@ -709,6 +826,45 @@
     // Init
     renderList();
     renderGrid();
+
+    function switchAlertTab(tab) {
+      if (tab === 'camera') {
+        location.href = '../camera-alarm-list.html';
+        return;
+      }
+      document.querySelectorAll('#alertCenterTabs [data-tab]').forEach(el => {
+        const on = el.dataset.tab === tab;
+        el.className = on
+          ? 'pb-3 border-b-2 border-accent text-accent font-medium cursor-pointer -mb-px'
+          : 'pb-3 text-textSub hover:text-textMain cursor-pointer -mb-px';
+      });
+      document.getElementById('panel-drone').classList.toggle('hidden', tab !== 'drone');
+      document.getElementById('panel-drone').classList.toggle('flex', tab === 'drone');
+      document.getElementById('panel-fiber').classList.toggle('hidden', tab !== 'fiber');
+      document.getElementById('panel-blackflight').classList.toggle('hidden', tab !== 'blackflight');
+      const url = new URL(location.href);
+      url.searchParams.set('tab', tab);
+      history.replaceState(null, '', url);
+    }
+
+    (function initTabFromQuery() {
+      const tab = new URLSearchParams(location.search).get('tab') || 'drone';
+      if (tab === 'camera') location.replace('../camera-alarm-list.html');
+      else if (tab === 'fiber' || tab === 'blackflight') switchAlertTab(tab);
+    })();
   </script>
+
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var dd = document.getElementById('breadcrumbDropdown');
+    var menu = document.getElementById('breadcrumbMenu');
+    if (!dd || !menu) return;
+    if (!dd.contains(e.target)) menu.classList.add('hidden');
+  });
+})();
+</script>
+
+<script src="../custom-select.js"></script>
 </body>
 </html>

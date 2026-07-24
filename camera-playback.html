@@ -125,16 +125,27 @@
             </a>
             <a href="project-home.html" class="hover:text-white transition-colors">项目首页</a>
             <span>/</span>
-            <a href="camera-monitor.html" class="hover:text-white transition-colors">监控中心</a>
+            <div class="relative" id="breadcrumbDropdown"><div class="flex items-center cursor-pointer hover:text-white text-gray-400" onclick="event.stopPropagation(); var m=document.getElementById('breadcrumbMenu'); if(m) m.classList.toggle('hidden');">
+                    <span>监控中心</span>
+                    <i class="fas fa-chevron-down text-xs ml-1"></i>
+                </div><div id="breadcrumbMenu" class="absolute left-0 top-full pt-1 w-36 hidden z-50">
+                    <div class="bg-[#1e1e1e] border border-[#2d2d2d] rounded shadow-lg py-1">
+                        <div class="px-4 py-2 hover:bg-[rgba(255,255,255,0.08)] cursor-pointer text-gray-300" onclick="window.location.href='drone-list.html'">设备管理</div>
+                        <div class="px-4 py-2 hover:bg-[rgba(255,255,255,0.08)] cursor-pointer text-gray-300" onclick="window.location.href='task-live.html'">任务实况</div>
+                        <div class="px-4 py-2 hover:bg-[rgba(255,255,255,0.08)] cursor-pointer text-gray-300" onclick="window.location.href='drone-monitor.html'">监控中心</div>
+                        <div class="px-4 py-2 hover:bg-[rgba(255,255,255,0.08)] cursor-pointer text-gray-300" onclick="window.location.href='task-list.html'">任务管理</div>
+                        <div class="px-4 py-2 hover:bg-[rgba(255,255,255,0.08)] cursor-pointer text-gray-300" onclick="window.location.href='alert/alert-list.html'">告警中心</div>
+                        <div class="px-4 py-2 hover:bg-[rgba(255,255,255,0.08)] cursor-pointer text-gray-300" onclick="window.location.href='resource-list.html'">资源库</div>
+                        <div class="px-4 py-2 hover:bg-[rgba(255,255,255,0.08)] cursor-pointer text-gray-300" onclick="window.location.href='workflow-list.html'">自动化工作流</div>
+                    </div>
+                </div>
+            </div>
             <span>/</span>
             <span class="text-white">录像回放</span>
         </div>
         
         <div class="flex items-center space-x-3">
-            <i class="fas fa-bell text-gray-400 hover:text-white cursor-pointer ml-2"></i>
-            <div class="w-6 h-6 rounded-full bg-gray-600 flex items-center justify-center text-xs text-white cursor-pointer">
-                <i class="fas fa-user"></i>
-            </div>
+            <i class="fas fa-times cursor-pointer hover:text-white text-lg text-gray-400" onclick="location.href='project-home.html'" title="关闭"></i>
         </div>
     </header>
 
@@ -160,14 +171,14 @@
                         </div>
                     </div>
                     <div id="node1" class="pl-6 pr-2 mt-1 space-y-1">
-                        <div class="channel-item flex items-center px-2 py-1.5 text-sm bg-[#58a6ff]/10 text-[#58a6ff] rounded cursor-pointer border border-[#58a6ff]/30" data-name="通道1: 可见光" data-gb="44030000001310000001" onclick="selectPlaybackChannel('海康双光谱球机-北门', '通道1: 可见光', false, this)">
+                        <div class="channel-item flex items-center px-2 py-1.5 text-sm bg-[#58a6ff]/10 text-[#58a6ff] rounded cursor-pointer border border-[#58a6ff]/30" data-name="通道1: 可见光" data-gb="44030000001310000001" onclick="selectPlaybackChannel('海康双光谱球机-北门', '通道1: 可见光', this)">
                             <i class="fas fa-video text-xs mr-2 shrink-0"></i>
                             <div class="flex flex-col min-w-0">
                                 <span class="truncate">通道1: 可见光</span>
                                 <span class="text-[10px] text-[#58a6ff]/70 font-mono truncate" title="44030000001310000001">44030000001310000001</span>
                             </div>
                         </div>
-                        <div class="channel-item flex items-center px-2 py-1.5 text-sm text-gray-400 hover:bg-[#21262d] rounded cursor-pointer" data-name="通道2: 红外" data-gb="44030000001310000002" onclick="selectPlaybackChannel('海康双光谱球机-北门', '通道2: 红外', false, this)">
+                        <div class="channel-item flex items-center px-2 py-1.5 text-sm text-gray-400 hover:bg-[#21262d] rounded cursor-pointer" data-name="通道2: 红外" data-gb="44030000001310000002" onclick="selectPlaybackChannel('海康双光谱球机-北门', '通道2: 红外', this)">
                             <i class="fas fa-video text-xs mr-2 shrink-0"></i>
                             <div class="flex flex-col min-w-0">
                                 <span class="truncate">通道2: 红外</span>
@@ -187,7 +198,7 @@
                         </div>
                     </div>
                     <div id="node2" class="pl-6 pr-2 mt-1 space-y-1 hidden">
-                        <div class="channel-item flex items-center px-2 py-1.5 text-sm text-gray-400 hover:bg-[#21262d] rounded cursor-pointer" data-name="通道1" data-gb="44030000001310000003" onclick="selectPlaybackChannel('大华枪机-东侧围墙', '通道1', false, this)">
+                        <div class="channel-item flex items-center px-2 py-1.5 text-sm text-gray-400 hover:bg-[#21262d] rounded cursor-pointer" data-name="通道1" data-gb="44030000001310000003" onclick="selectPlaybackChannel('大华枪机-东侧围墙', '通道1', this)">
                             <i class="fas fa-video text-xs mr-2 shrink-0"></i>
                             <div class="flex flex-col min-w-0">
                                 <span class="truncate">通道1</span>
@@ -210,7 +221,7 @@
                         </div>
                     </div>
                     <div id="node3" class="pl-6 pr-2 mt-1 space-y-1">
-                        <div class="channel-item flex items-center px-2 py-1.5 text-sm text-gray-500 hover:bg-[#21262d] rounded cursor-pointer" data-name="通道1" data-gb="44030000001310000004" onclick="selectPlaybackChannel('海康全景-料场全景', '通道1', true, this)">
+                        <div class="channel-item flex items-center px-2 py-1.5 text-sm text-gray-600 rounded cursor-not-allowed opacity-60" data-name="通道1" data-gb="44030000001310000004" data-offline="1" onclick="showToast('设备离线，无法拉取设备端录像', 'warning')" title="设备离线，无法拉取设备端录像">
                             <i class="fas fa-video text-xs mr-2 shrink-0"></i>
                             <div class="flex flex-col min-w-0">
                                 <span class="truncate">通道1</span>
@@ -233,7 +244,7 @@
                     <div class="flex justify-between items-center mb-2 px-1 shrink-0">
                         <div class="flex items-center space-x-3">
                             <span id="playback-channel-title" class="text-sm text-white font-medium">海康双光谱球机-北门 - 通道1: 可见光 <span class="text-gray-400 font-normal ml-1">的录像回放</span></span>
-                            <span id="playback-offline-banner" class="hidden text-[10px] bg-[#5a3a00]/30 text-[#d29922] border border-[#d29922]/30 px-1.5 py-0.5 rounded">设备离线，仅可查看云端历史录像</span>
+                            <span class="text-[10px] text-gray-500 border border-[#30363d] px-1.5 py-0.5 rounded">设备端录像</span>
                         </div>
                         <div class="flex items-center space-x-2">
                             <input type="date" value="2026-06-06" class="bg-[#1e1e1e] border border-[#2d2d2d] text-xs text-gray-300 rounded px-2 py-1.5 focus:outline-none focus:border-[#58a6ff] [color-scheme:dark]">
@@ -397,16 +408,24 @@
             const urlParams = new URLSearchParams(window.location.search);
             const device = urlParams.get('device') || '海康双光谱球机-北门';
             const channel = urlParams.get('channel') || '通道1: 可见光';
-            const isOffline = urlParams.get('offline') === '1';
-            selectPlaybackChannel(device, channel, isOffline);
+            // 回放仅取设备端录像；离线设备不可进入（含历史 offline 参数）
+            if (urlParams.get('offline') === '1') {
+                showToast('设备离线，无法拉取设备端录像', 'warning');
+                selectPlaybackChannel('海康双光谱球机-北门', '通道1: 可见光');
+                return;
+            }
+            selectPlaybackChannel(device, channel);
         };
 
-        function selectPlaybackChannel(device, channel, isOffline = false, el = null) {
+        function selectPlaybackChannel(device, channel, el = null) {
+            if (el && el.dataset.offline === '1') {
+                showToast('设备离线，无法拉取设备端录像', 'warning');
+                return;
+            }
             document.getElementById('playback-channel-title').innerHTML = `${device} - ${channel} <span class="text-gray-400 font-normal ml-1">的录像回放</span>`;
-            const banner = document.getElementById('playback-offline-banner');
-            banner.classList.toggle('hidden', !isOffline);
 
             document.querySelectorAll('.channel-item').forEach(item => {
+                if (item.dataset.offline === '1') return;
                 item.classList.remove('bg-[#58a6ff]/10', 'text-[#58a6ff]', 'border', 'border-[#58a6ff]/30');
                 item.classList.add('text-gray-400');
                 const code = item.querySelector('.font-mono');
@@ -481,5 +500,18 @@
             }
         }
     </script>
+
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var dd = document.getElementById('breadcrumbDropdown');
+    var menu = document.getElementById('breadcrumbMenu');
+    if (!dd || !menu) return;
+    if (!dd.contains(e.target)) menu.classList.add('hidden');
+  });
+})();
+</script>
+
+<script src="custom-select.js"></script>
 </body>
 </html>

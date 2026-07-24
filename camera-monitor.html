@@ -125,14 +125,25 @@
             </a>
             <a href="project-home.html" class="hover:text-white transition-colors">项目首页</a>
             <span>/</span>
-            <span class="text-white">监控中心</span>
+            <div class="relative" id="breadcrumbDropdown"><div class="flex items-center cursor-pointer hover:text-white text-white" onclick="event.stopPropagation(); var m=document.getElementById('breadcrumbMenu'); if(m) m.classList.toggle('hidden');">
+                    <span>监控中心</span>
+                    <i class="fas fa-chevron-down text-xs ml-1"></i>
+                </div><div id="breadcrumbMenu" class="absolute left-0 top-full pt-1 w-36 hidden z-50">
+                    <div class="bg-[#1e1e1e] border border-[#2d2d2d] rounded shadow-lg py-1">
+                        <div class="px-4 py-2 hover:bg-[rgba(255,255,255,0.08)] cursor-pointer text-gray-300" onclick="window.location.href='drone-list.html'">设备管理</div>
+                        <div class="px-4 py-2 hover:bg-[rgba(255,255,255,0.08)] cursor-pointer text-gray-300" onclick="window.location.href='task-live.html'">任务实况</div>
+                        <div class="px-4 py-2 bg-[rgba(88,166,255,0.1)] text-[#58a6ff] cursor-pointer" onclick="window.location.href='drone-monitor.html'">监控中心</div>
+                        <div class="px-4 py-2 hover:bg-[rgba(255,255,255,0.08)] cursor-pointer text-gray-300" onclick="window.location.href='task-list.html'">任务管理</div>
+                        <div class="px-4 py-2 hover:bg-[rgba(255,255,255,0.08)] cursor-pointer text-gray-300" onclick="window.location.href='alert/alert-list.html'">告警中心</div>
+                        <div class="px-4 py-2 hover:bg-[rgba(255,255,255,0.08)] cursor-pointer text-gray-300" onclick="window.location.href='resource-list.html'">资源库</div>
+                        <div class="px-4 py-2 hover:bg-[rgba(255,255,255,0.08)] cursor-pointer text-gray-300" onclick="window.location.href='workflow-list.html'">自动化工作流</div>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <div class="flex items-center space-x-3">
-            <i class="fas fa-bell text-gray-400 hover:text-white cursor-pointer ml-2"></i>
-            <div class="w-6 h-6 rounded-full bg-gray-600 flex items-center justify-center text-xs text-white cursor-pointer">
-                <i class="fas fa-user"></i>
-            </div>
+            <i class="fas fa-times cursor-pointer hover:text-white text-lg text-gray-400" onclick="location.href='project-home.html'" title="关闭"></i>
         </div>
     </header>
 
@@ -250,7 +261,7 @@
                                 </div>
                             </div>
                             <div class="flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity items-center shrink-0 ml-1">
-                                <i class="fas fa-history text-xs hover:text-white" title="查看云端历史回放" onclick="event.stopPropagation(); openPlayback('海康全景-料场全景', '通道1', true)"></i>
+                                <i class="fas fa-history text-xs text-gray-600 cursor-not-allowed" title="设备离线，无法拉取设备端录像" onclick="event.stopPropagation(); showToast('设备离线，无法拉取设备端录像', 'warning')"></i>
                             </div>
                         </div>
                     </div>
@@ -530,9 +541,8 @@
             }, 3000);
         }
 
-        function openPlayback(device, channel, isOffline = false) {
+        function openPlayback(device, channel) {
             const params = new URLSearchParams({ device, channel });
-            if (isOffline) params.set('offline', '1');
             location.href = `camera-playback.html?${params.toString()}`;
         }
 
@@ -657,5 +667,18 @@
             }
         }
     </script>
+
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var dd = document.getElementById('breadcrumbDropdown');
+    var menu = document.getElementById('breadcrumbMenu');
+    if (!dd || !menu) return;
+    if (!dd.contains(e.target)) menu.classList.add('hidden');
+  });
+})();
+</script>
+
+<script src="custom-select.js"></script>
 </body>
 </html>
